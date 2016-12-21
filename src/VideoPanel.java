@@ -1,17 +1,11 @@
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JPanel;
-import javax.swing.JSplitPane;
-import javax.swing.JTextField;
 import javax.swing.Timer;
-
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
@@ -23,6 +17,7 @@ public class VideoPanel  extends JPanel
 	 */
 	private static final long serialVersionUID = 1L;
 	private BufferedImage image;
+	//private BufferedImage extractedImage;
 	private String processedText;
 	Video vid = new Video();
 	ITesseract instance = new Tesseract();
@@ -48,37 +43,6 @@ public class VideoPanel  extends JPanel
 			image = vid.displayImage();
 			processedText = processText(image);
 			System.out.println(processedText);
-			/**JSplitPane splitPane = new JSplitPane();
-			JPanel topPanel = new JPanel() 
-			{
-				private static final long serialVersionUID = 1L;
-				@Override
-				protected void paintComponent(Graphics g) {
-					super.paintComponent(g);
-					g.drawImage(image, 0, 0, null);
-					g.drawString(processedText, 0, 700);
-				}
-				
-			};
-			
-			JPanel botPanel = new JPanel()
-			{
-				private static final long serialVersionUID = 1L;
-				@Override
-				protected void paintComponent(Graphics g) {
-					super.paintComponent(g);
-					g.drawString(processedText, 0, 700);
-				}
-				
-			};
-			JTextField textField = new JTextField();
-			textField.setText(processText(image));
-			textField.setEditable(false);
-			splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
-			splitPane.setDividerLocation(600);
-			splitPane.setTopComponent(topPanel);
-			splitPane.setBottomComponent(botPanel);
-			botPanel.setLayout(new BoxLayout(botPanel, BoxLayout.Y_AXIS));*/
 			repaint();
 		}
 		
@@ -105,16 +69,15 @@ public class VideoPanel  extends JPanel
 		return result;
 	}
 	
-	public Dimension getPreferredSize()	
-	{
-		return new Dimension(650,700);
-	}
 	
 	@Override
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponents(g);
 		g.drawImage(image, 0, 0, this);
-		g.drawString(processedText, 0, 650);
+		g.setColor(Color.white);
+		g.fillRect(0, 520, 657, 230);
+		g.setColor(Color.black);
+		g.drawString(processedText, 250, 650);
 	}
 }
